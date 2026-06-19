@@ -1,0 +1,1 @@
+give @s wooden_axe 1
