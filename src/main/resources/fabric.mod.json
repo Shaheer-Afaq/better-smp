@@ -20,6 +20,9 @@
 		],
 		"client": [
 			"better_smp.client.BetterSMPClient"
+		],
+		"fabric-datagen": [
+			"com.better_smp.datagen.DataGenerator"
 		]
 	},
 	"mixins": [
