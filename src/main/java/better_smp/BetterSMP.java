@@ -14,6 +14,7 @@ public class BetterSMP implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		ModItems.initialize();
+		ModBlocks.initialize();
 		LOGGER.info("Hello Fabric world!");
 	}
 
