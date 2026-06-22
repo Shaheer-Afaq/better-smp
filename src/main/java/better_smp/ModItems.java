@@ -3,12 +3,18 @@ package better_smp;
 import better_smp.weapons.ReapersScyth;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 
 import java.util.function.Function;
 
@@ -17,7 +23,21 @@ public class ModItems {
     public static final Item WAR_TOKEN = register("war_token", Item::new, new Item.Properties());
 
     public static final Item REAPERS_SCYTH = register("reapers_scyth",
-            properties -> new ReapersScyth(properties, 60), new Item.Properties().stacksTo(1));
+            properties -> new ReapersScyth(properties, 30),
+            new Item.Properties().stacksTo(1)
+                    .component(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.builder()
+                    .add(
+                            Attributes.ATTACK_DAMAGE,
+                            new AttributeModifier(
+                                    Item.BASE_ATTACK_DAMAGE_ID,
+                                    4.0,
+                                    AttributeModifier.Operation.ADD_VALUE
+                            ),
+                            EquipmentSlotGroup.MAINHAND
+                    )
+                    .build()
+            )
+    );
 
     public static void initialize(){
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.COMBAT)

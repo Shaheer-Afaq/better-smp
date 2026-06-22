@@ -16,6 +16,7 @@ public class BetterSMP implements ModInitializer {
 		ModItems.initialize();
 		ModBlocks.initialize();
 		ModComponents.initialize();
+		PayloadRegistry.initialize();
 		LOGGER.info("Hello Fabric world!");
 	}
 
