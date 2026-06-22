@@ -7,7 +7,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 
-public record DashPayload(double dirX, double dirY, double dirZ, int ticks) implements CustomPacketPayload {
+public record DashPayload(double dirX, double dirY, double dirZ, double velX, double velY, double velZ, int ticks) implements CustomPacketPayload {
     public static final Type<DashPayload> TYPE = new Type<>(
             Identifier.fromNamespaceAndPath(BetterSMP.MOD_ID, "dash")
     );
@@ -16,6 +16,9 @@ public record DashPayload(double dirX, double dirY, double dirZ, int ticks) impl
             ByteBufCodecs.DOUBLE, DashPayload::dirX,
             ByteBufCodecs.DOUBLE, DashPayload::dirY,
             ByteBufCodecs.DOUBLE, DashPayload::dirZ,
+            ByteBufCodecs.DOUBLE, DashPayload::velX,
+            ByteBufCodecs.DOUBLE, DashPayload::velY,
+            ByteBufCodecs.DOUBLE, DashPayload::velZ,
             ByteBufCodecs.VAR_INT, DashPayload::ticks,
             DashPayload::new
     );

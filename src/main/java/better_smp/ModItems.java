@@ -27,13 +27,13 @@ public class ModItems {
             new Item.Properties().stacksTo(1)
                     .component(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.builder()
                     .add(
-                            Attributes.ATTACK_DAMAGE,
-                            new AttributeModifier(
-                                    Item.BASE_ATTACK_DAMAGE_ID,
-                                    4.0,
-                                    AttributeModifier.Operation.ADD_VALUE
-                            ),
-                            EquipmentSlotGroup.MAINHAND
+                        Attributes.ATTACK_DAMAGE,
+                        new AttributeModifier(
+                                Item.BASE_ATTACK_DAMAGE_ID,
+                                4.0,
+                                AttributeModifier.Operation.ADD_VALUE
+                        ),
+                        EquipmentSlotGroup.MAINHAND
                     )
                     .build()
             )
