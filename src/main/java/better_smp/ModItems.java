@@ -1,5 +1,6 @@
 package better_smp;
 
+import better_smp.weapons.ReapersScyth;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -15,10 +16,14 @@ public class ModItems {
 
     public static final Item WAR_TOKEN = register("war_token", Item::new, new Item.Properties());
 
+    public static final Item REAPERS_SCYTH = register("reapers_scyth",
+            properties -> new ReapersScyth(properties, 60), new Item.Properties().stacksTo(1));
+
     public static void initialize(){
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.COMBAT)
                 .register((creativeTab) -> {
                     creativeTab.accept(ModItems.WAR_TOKEN);
+                    creativeTab.accept(ModItems.REAPERS_SCYTH);
                 });
     }
 

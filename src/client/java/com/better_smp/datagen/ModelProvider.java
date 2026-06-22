@@ -19,6 +19,7 @@ public class ModelProvider extends FabricModelProvider {
     @Override
     public void generateItemModels(ItemModelGenerators itemModelGenerator) {
         itemModelGenerator.generateFlatItem(ModItems.WAR_TOKEN, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(ModItems.REAPERS_SCYTH, ModelTemplates.FLAT_HANDHELD_ROD_ITEM);
     }
 
     @Override
