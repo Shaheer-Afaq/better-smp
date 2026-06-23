@@ -1,5 +1,6 @@
 package better_smp.weapons;
 
+import better_smp.ModSounds;
 import better_smp.utils.TaskScheduler;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.server.level.ServerLevel;
@@ -42,7 +43,7 @@ public class ReapersScyth extends CustomWeapon {
                     look.x * dashSpeed, look.y * dashSpeed * 0.8, look.z * dashSpeed, vel.x, vel.y, vel.z, 9
             ));
             ServerLevel serverLevel = (ServerLevel) player.level();
-            serverLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.RAVAGER_STEP, SoundSource.PLAYERS);
+            serverLevel.playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.DASH, SoundSource.PLAYERS);
         }
     }
 }

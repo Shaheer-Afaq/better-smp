@@ -15,5 +15,6 @@ public class EnglishLangProvider extends FabricLanguageProvider {
     public void generateTranslations(HolderLookup.Provider holderLookup, TranslationBuilder translationBuilder) {
         translationBuilder.add("item.better-smp.war_token", "War Token");
         translationBuilder.add("item.better-smp.reapers_scyth", "Reaper's Scyth");
+        translationBuilder.add("sound.better-smp.dash", "Scyth Dashes");
     }
 }
