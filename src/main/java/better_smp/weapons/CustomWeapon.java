@@ -26,6 +26,7 @@ public abstract class CustomWeapon extends Item {
 
     @Override
     public InteractionResult use(final Level level, final Player player, final InteractionHand hand){
+        player.startUsingItem(hand);
         ItemStack stack = player.getItemInHand(hand);
         long currentTick = level.getGameTime();
         if (stack.getOrDefault(ModComponents.NEXT_USABLE_TICK, currentTick) <= currentTick){

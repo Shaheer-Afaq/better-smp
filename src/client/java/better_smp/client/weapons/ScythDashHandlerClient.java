@@ -6,12 +6,10 @@ import net.minecraft.world.phys.Vec3;
 public class ScythDashHandlerClient {
     private static Vec3 dashDirection = null;
     private static int ticksRemaining = 0;
-    private static Vec3 initialSpeed = Vec3.ZERO;
 
     public static void startDash(Vec3 dashVec, Vec3 speed, int ticks) {
         dashDirection = dashVec;
         ticksRemaining = ticks;
-        initialSpeed = speed;
     }
 
     public static void tick(LocalPlayer player) {

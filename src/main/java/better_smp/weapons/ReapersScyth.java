@@ -1,7 +1,6 @@
 package better_smp.weapons;
 
 import better_smp.ModSounds;
-import better_smp.utils.TaskScheduler;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -11,8 +10,10 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.NonNull;
 
 public class ReapersScyth extends CustomWeapon {
 
@@ -32,6 +33,11 @@ public class ReapersScyth extends CustomWeapon {
     @Override
     protected void onUse(Level level, Player player, InteractionHand hand) {
         dash(player);
+    }
+
+    @Override
+    public int getUseDuration(ItemStack stack, LivingEntity entity) {
+        return 40;
     }
 
     private void dash(Player player){
