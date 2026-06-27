@@ -12,6 +12,11 @@ import net.minecraft.world.level.Level;
 public abstract class CustomWeapon extends Item {
 
     protected final int cooldown;
+    private float lastStrengthScale = 0f;
+
+    public void setLastStrengthScale(float scale) {
+        this.lastStrengthScale = scale;
+    }
 
     public CustomWeapon (Properties properties, int cooldown){
         super(properties);
@@ -21,7 +26,7 @@ public abstract class CustomWeapon extends Item {
     @Override
     public void hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         super.hurtEnemy(stack, target, attacker);
-        onHit(stack, target, attacker);
+        onHit(stack, target, attacker, lastStrengthScale);
     }
 
     @Override
@@ -38,7 +43,7 @@ public abstract class CustomWeapon extends Item {
         }
     }
 
-    protected abstract void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker);
+    protected abstract void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, float strengthScale);
     protected abstract void onUse(final Level level, final Player player, final InteractionHand hand);
 
 

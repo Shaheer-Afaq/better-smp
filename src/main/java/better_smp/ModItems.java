@@ -28,15 +28,17 @@ public class ModItems {
             properties -> new ReapersScyth(properties, 30),
             new Item.Properties().stacksTo(1)
                     .component(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.builder()
-                        .add(
-                            Attributes.ATTACK_DAMAGE,
+                        .add(Attributes.ATTACK_DAMAGE,
                             new AttributeModifier(
-                                    Item.BASE_ATTACK_DAMAGE_ID,
-                                    4.0,
+                                    Item.BASE_ATTACK_DAMAGE_ID, 3.0,
                                     AttributeModifier.Operation.ADD_VALUE
-                            ),
-                            EquipmentSlotGroup.MAINHAND
+                            ), EquipmentSlotGroup.MAINHAND
                         )
+                        .add(Attributes.ATTACK_SPEED,
+                            new AttributeModifier(
+                                    Item.BASE_ATTACK_SPEED_ID, -3,
+                                    AttributeModifier.Operation.ADD_VALUE
+                            ), EquipmentSlotGroup.MAINHAND)
                         .build()
                     )
     );

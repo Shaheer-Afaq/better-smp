@@ -22,8 +22,10 @@ public class ReapersScyth extends CustomWeapon {
     }
 
     @Override
-    protected void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        if (target.getHealth() < target.getMaxHealth() * 0.25){
+    protected void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, float lastStrengthScale) {
+        if (lastStrengthScale < 0.95) return;
+
+        if (target.getHealth() < target.getMaxHealth() * 0.2){
             ServerLevel serverLevel = (ServerLevel) target.level();
             target.setHealth((float) (target.getHealth() - target.getMaxHealth() * 0.1));
             serverLevel.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.WITHER_HURT, SoundSource.PLAYERS);
@@ -37,7 +39,7 @@ public class ReapersScyth extends CustomWeapon {
 
     @Override
     public int getUseDuration(ItemStack stack, LivingEntity entity) {
-        return 40;
+        return 10;
     }
 
     private void dash(Player player){
