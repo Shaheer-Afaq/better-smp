@@ -14,9 +14,9 @@ public class PlayerAttackMixin {
 
     @Inject(method = "attack", at = @At("HEAD"))
     private void captureStrengthScale(Entity entity, CallbackInfo ci) {
-        Player self = (Player) (Object) this;
-        float scale = self.getAttackStrengthScale(0f);
-        ItemStack held = self.getMainHandItem();
+        Player player = (Player) (Object) this;
+        float scale = player.getAttackStrengthScale(0.5f);
+        ItemStack held = player.getMainHandItem();
 
         if (held.getItem() instanceof CustomWeapon weapon) {
             weapon.setLastStrengthScale(scale);

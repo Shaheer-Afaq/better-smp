@@ -25,22 +25,8 @@ public class ModItems {
     public static final Item WAR_TOKEN = register("war_token", Item::new, new Item.Properties());
 
     public static final Item REAPERS_SCYTH = register("reapers_scyth",
-            properties -> new ReapersScyth(properties, 30),
-            new Item.Properties().stacksTo(1)
-                    .component(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.builder()
-                        .add(Attributes.ATTACK_DAMAGE,
-                            new AttributeModifier(
-                                    Item.BASE_ATTACK_DAMAGE_ID, 3.0,
-                                    AttributeModifier.Operation.ADD_VALUE
-                            ), EquipmentSlotGroup.MAINHAND
-                        )
-                        .add(Attributes.ATTACK_SPEED,
-                            new AttributeModifier(
-                                    Item.BASE_ATTACK_SPEED_ID, -3,
-                                    AttributeModifier.Operation.ADD_VALUE
-                            ), EquipmentSlotGroup.MAINHAND)
-                        .build()
-                    )
+            properties -> new ReapersScyth(properties, 200),
+                new ModProperties().weapon(4, 2).range(0.5f, 2).build()
     );
 
     public static void initialize(){
