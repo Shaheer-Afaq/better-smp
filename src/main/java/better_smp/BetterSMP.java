@@ -1,5 +1,6 @@
 package better_smp;
 
+import better_smp.weapons.WeaponEvents;
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.resources.Identifier;
@@ -13,12 +14,13 @@ public class BetterSMP implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		Events.initialize();
+		WeaponEvents.initialize();
 		ModItems.initialize();
 		ModBlocks.initialize();
 		ModComponents.initialize();
 		ModSounds.initialize();
 		PayloadRegistry.initialize();
-		LOGGER.info("Hello Fabric world!");
 	}
 
 	public static Identifier id(String path) {

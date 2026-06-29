@@ -17,8 +17,8 @@ import org.jspecify.annotations.NonNull;
 
 public class ReapersScyth extends CustomWeapon {
 
-    public ReapersScyth(Properties properties, int cooldown){
-        super(properties, cooldown);
+    public ReapersScyth(Properties properties, int cooldownPrimary, int cooldownSecondary){
+        super(properties,cooldownPrimary, cooldownSecondary);
     }
 
     @Override
@@ -33,14 +33,14 @@ public class ReapersScyth extends CustomWeapon {
     }
 
     @Override
-    protected void onUse(Level level, Player player, InteractionHand hand) {
+    protected void onUse(Level level, Player player, InteractionHand hand)  {
         dash(player);
     }
 
-    @Override
-    public int getUseDuration(ItemStack stack, LivingEntity entity) {
-        return 10;
-    }
+//    @Override
+//    public int getUseDuration(ItemStack stack, LivingEntity entity) {
+//        return 10;
+//    }
 
     private void dash(Player player){
         if (player instanceof ServerPlayer serverPlayer) {

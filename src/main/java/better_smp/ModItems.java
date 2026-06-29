@@ -1,5 +1,6 @@
 package better_smp;
 
+import better_smp.weapons.BloodLust;
 import better_smp.weapons.ReapersScyth;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.minecraft.core.Registry;
@@ -25,8 +26,12 @@ public class ModItems {
     public static final Item WAR_TOKEN = register("war_token", Item::new, new Item.Properties());
 
     public static final Item REAPERS_SCYTH = register("reapers_scyth",
-            properties -> new ReapersScyth(properties, 200),
+            properties -> new ReapersScyth(properties, 200, 100),
                 new ModProperties().weapon(4, 2).range(0.5f, 2).build()
+    );
+    public static final Item BLOODLUST = register("bloodlust",
+            properties -> new BloodLust(properties, 100, 100),
+                new ModProperties().weapon(4, 1.6f).build()
     );
 
     public static void initialize(){
@@ -34,6 +39,7 @@ public class ModItems {
                 .register((creativeTab) -> {
                     creativeTab.accept(ModItems.WAR_TOKEN);
                     creativeTab.accept(ModItems.REAPERS_SCYTH);
+                    creativeTab.accept(ModItems.BLOODLUST);
                 });
     }
 

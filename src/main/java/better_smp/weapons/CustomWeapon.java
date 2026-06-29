@@ -1,7 +1,9 @@
 package better_smp.weapons;
 
 import better_smp.ModComponents;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -14,34 +16,41 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jspecify.annotations.Nullable;
-import org.w3c.dom.Text;
-
-import java.awt.*;
 
 public abstract class CustomWeapon extends Item {
 
-    protected final int cooldown;
+    protected final int cooldownPrimary;
+    protected final int cooldownSecondary;
 
     private float lastStrengthScale = 0f;
     public void setLastStrengthScale(float scale) {
         this.lastStrengthScale = scale;
     }
 
-    public CustomWeapon (Properties properties, int cooldown){
+    private String lastSentMessage = "";
+
+    public CustomWeapon (Properties properties, int cooldownPrimary, int cooldownSecondary) {
         super(properties);
-        this.cooldown = cooldown;
+        this.cooldownPrimary = cooldownPrimary;
+        this.cooldownSecondary = cooldownSecondary;
     }
 
     @Override
     public void inventoryTick(final ItemStack itemStack, final ServerLevel level, final Entity owner, final @Nullable EquipmentSlot slot){
         if (owner instanceof Player player) {
-            if (slot == EquipmentSlot.MAINHAND){
-                float cooldownLeft = getTicksLeft(itemStack, level) / 20f;
-                if (cooldownLeft > 0){
-                    player.sendOverlayMessage(Component.literal(String.format("%.1f", cooldownLeft) + "s left").withColor(TextColor.RED));
-                }else{
-                    player.sendOverlayMessage(Component.literal("Ready!").withColor(TextColor.GREEN));
-                }
+            if (slot == EquipmentSlot.MAINHAND && level.getGameTime() % 2 == 0) {
+
+                int cooldownLeftPrimary = Math.round(getTicksLeft(itemStack, ModComponents.PRIMARY_NEXT_USABLE_TICK, level) / 20f);
+                int cooldownLeftSecondary = Math.round(getTicksLeft(itemStack, ModComponents.SECONDARY_NEXT_USABLE_TICK, level) / 20f);
+                MutableComponent message = cooldownLeftPrimary > 0 ? Component.literal( cooldownLeftPrimary + "s left ").withColor(TextColor.RED):
+                        Component.literal( "Ready ! ").withColor(TextColor.GREEN);
+
+                message.append(cooldownLeftSecondary > 0 ? Component.literal( cooldownLeftSecondary + "s left ").withColor(TextColor.RED):
+                                        Component.literal( "Ready ! ").withColor(TextColor.GREEN));
+
+                message.append(getMessage());
+
+                player.sendOverlayMessage(message);
             }
         }
     }
@@ -55,20 +64,33 @@ public abstract class CustomWeapon extends Item {
     @Override
     public InteractionResult use(final Level level, final Player player, final InteractionHand hand){
         ItemStack stack = player.getItemInHand(hand);
-        if (getTicksLeft(stack, level) <= 0){
-            stack.set(ModComponents.NEXT_USABLE_TICK, level.getGameTime() + this.cooldown);
-            onUse(level, player, hand);
-            return InteractionResult.SUCCESS;
-        } else{
-            return InteractionResult.FAIL;
+        if (player.isShiftKeyDown()){
+            if (getTicksLeft(stack, ModComponents.SECONDARY_NEXT_USABLE_TICK, level) <= 0){
+                stack.set(ModComponents.SECONDARY_NEXT_USABLE_TICK, level.getGameTime() + this.cooldownSecondary);
+//                onUse(level, player, hand);
+                return InteractionResult.SUCCESS;
+            } else{
+                return InteractionResult.FAIL;
+            }
+        }else {
+            if (getTicksLeft(stack, ModComponents.PRIMARY_NEXT_USABLE_TICK, level) <= 0){
+                stack.set(ModComponents.PRIMARY_NEXT_USABLE_TICK, level.getGameTime() + this.cooldownPrimary);
+                onUse(level, player, hand);
+                return InteractionResult.SUCCESS;
+            } else{
+                return InteractionResult.FAIL;
+            }
         }
     }
 
     protected abstract void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, float strengthScale);
     protected abstract void onUse(final Level level, final Player player, final InteractionHand hand);
+    protected Component getMessage(){
+        return Component.literal("");
+    }
 
-    private long getTicksLeft(ItemStack stack, Level level) {
-        return stack.getOrDefault(ModComponents.NEXT_USABLE_TICK, level.getGameTime()) - level.getGameTime();
+    private long getTicksLeft(ItemStack stack, DataComponentType component, Level level) {
+        return stack.getOrDefault(component, level.getGameTime()) - level.getGameTime();
     }
 
 }
