@@ -18,12 +18,19 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jspecify.annotations.Nullable;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 public class BloodLust extends CustomWeapon{
+    private final Map<UUID, Integer> charge = new HashMap<>();
+
     public BloodLust(Item.Properties properties, int cooldownPrimary, int cooldownSecondary){
         super(properties, cooldownPrimary, cooldownSecondary);
+
+        charge.put(UUID.randomUUID(), 0);
     }
 
-    private int charge = 0;
 
 
     @Override
@@ -32,29 +39,36 @@ public class BloodLust extends CustomWeapon{
     }
 
     @Override
-    protected void onUse(Level level, Player player, InteractionHand hand) {
+    protected void onPrimaryUse(Level level, Player player, InteractionHand hand) {
+
+    }
+    @Override
+    protected void onSecondaryUse(Level level, Player player, InteractionHand hand) {
 
     }
 
 
     @Override
-    public void inventoryTick(ItemStack itemStack, ServerLevel level, Entity owner, @Nullable EquipmentSlot slot) {
-        super.inventoryTick(itemStack, level, owner, slot);
-        if (level.getGameTime() % 5 == 0){
-            setCharge(Math.max(getCharge() - 1, 0));
+    public void inventoryTick(ItemStack stack, ServerLevel level, Entity owner, @Nullable EquipmentSlot slot) {
+        if (stack.get(ModComponents.WEAPON_ID) == null) {
+            stack.set(ModComponents.WEAPON_ID, UUID.randomUUID());
+        }
+        super.inventoryTick(stack, level, owner, slot);
+        if (level.getGameTime() % 10 == 0){
+            setCharge(stack, Math.max(getCharge(stack) - 1, 0));
         }
     }
 
     @Override
-    protected Component getMessage(){
-        return Component.literal("Power: " + String.valueOf(getCharge())).withColor(TextColor.GREEN);
+    protected Component getMessage(ItemStack stack){
+        return Component.literal("Power: " + String.valueOf(getCharge(stack))).withColor(TextColor.GREEN);
     }
 
-    public int getCharge() {
-        return charge;
+    public int getCharge(ItemStack stack) {
+        return this.charge.getOrDefault(stack.get(ModComponents.WEAPON_ID), 0);
     }
 
-    public void setCharge(int charge) {
-        this.charge = charge;
+    public void setCharge(ItemStack stack, int charge) {
+        this.charge.put(stack.get(ModComponents.WEAPON_ID),  charge);
     }
 }

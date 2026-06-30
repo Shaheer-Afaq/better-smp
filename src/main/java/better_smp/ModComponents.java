@@ -2,9 +2,12 @@ package better_smp;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.Registry;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
+
+import java.util.UUID;
 
 public class ModComponents {
 
@@ -19,10 +22,10 @@ public class ModComponents {
             DataComponentType.<Long>builder().persistent(Codec.LONG).build()
     );
 
-    public static final DataComponentType<Integer> CHARGE = Registry.register(
+    public static final DataComponentType<UUID> WEAPON_ID = Registry.register(
             BuiltInRegistries.DATA_COMPONENT_TYPE,
             Identifier.fromNamespaceAndPath(BetterSMP.MOD_ID, "charge"),
-            DataComponentType.<Integer>builder().persistent(Codec.INT).build()
+            DataComponentType.<UUID>builder().persistent(UUIDUtil.CODEC).build()
     );
     protected static void initialize() {
 

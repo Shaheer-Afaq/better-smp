@@ -33,14 +33,13 @@ public class ReapersScyth extends CustomWeapon {
     }
 
     @Override
-    protected void onUse(Level level, Player player, InteractionHand hand)  {
+    protected void onPrimaryUse(Level level, Player player, InteractionHand hand) {
         dash(player);
     }
+    @Override
+    protected void onSecondaryUse(Level level, Player player, InteractionHand hand) {
 
-//    @Override
-//    public int getUseDuration(ItemStack stack, LivingEntity entity) {
-//        return 10;
-//    }
+    }
 
     private void dash(Player player){
         if (player instanceof ServerPlayer serverPlayer) {

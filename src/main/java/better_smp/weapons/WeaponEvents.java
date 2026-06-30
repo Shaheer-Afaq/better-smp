@@ -18,7 +18,7 @@ public class WeaponEvents {
             if (entity instanceof ServerPlayer player) {
                 ItemStack stack = player.getMainHandItem();
                 if (stack.getItem() instanceof BloodLust bloodLust) {
-                    bloodLust.setCharge(Math.min((int) (bloodLust.getCharge() + baseDamageTaken * 2), 100));
+                    bloodLust.setCharge(stack, Math.min((int) (bloodLust.getCharge(stack) + baseDamageTaken * 2), 100));
                 }
             }
         });
