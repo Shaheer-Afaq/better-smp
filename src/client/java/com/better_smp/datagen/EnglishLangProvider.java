@@ -15,7 +15,10 @@ public class EnglishLangProvider extends FabricLanguageProvider {
     public void generateTranslations(HolderLookup.Provider holderLookup, TranslationBuilder translationBuilder) {
         translationBuilder.add("item.better-smp.war_token", "War Token");
         translationBuilder.add("item.better-smp.reapers_scyth", "Reaper's Scyth");
-        translationBuilder.add("item.better-smp.bloodlust", "Bloodlust");
+        translationBuilder.add("item.better-smp.bloodlustknife", "Bloodlust Knife");
+
         translationBuilder.add("sound.better-smp.dash", "Scyth Dashes");
+        translationBuilder.add("sound.better-smp.knife-backstab", "Knife Backstabs");
+        translationBuilder.add("sound.better-smp.scyth-hit", "Scyth Hits");
     }
 }

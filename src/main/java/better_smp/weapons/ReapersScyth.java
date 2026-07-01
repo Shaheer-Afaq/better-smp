@@ -28,20 +28,12 @@ public class ReapersScyth extends CustomWeapon {
         if (target.getHealth() < target.getMaxHealth() * 0.2){
             ServerLevel serverLevel = (ServerLevel) target.level();
             target.setHealth((float) (target.getHealth() - target.getMaxHealth() * 0.1));
-            serverLevel.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.WITHER_HURT, SoundSource.PLAYERS);
+            serverLevel.playSound(null, target.getX(), target.getY(), target.getZ(), ModSounds.SCYTHHIT, SoundSource.PLAYERS);
         }
     }
 
     @Override
     protected void onPrimaryUse(Level level, Player player, InteractionHand hand) {
-        dash(player);
-    }
-    @Override
-    protected void onSecondaryUse(Level level, Player player, InteractionHand hand) {
-
-    }
-
-    private void dash(Player player){
         if (player instanceof ServerPlayer serverPlayer) {
             Vec3 look = player.getLookAngle();
             Vec3 vel = player.getDeltaMovement();
@@ -52,5 +44,9 @@ public class ReapersScyth extends CustomWeapon {
             ServerLevel serverLevel = (ServerLevel) player.level();
             serverLevel.playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.DASH, SoundSource.PLAYERS);
         }
+    }
+    @Override
+    protected void onSecondaryUse(Level level, Player player, InteractionHand hand) {
+
     }
 }

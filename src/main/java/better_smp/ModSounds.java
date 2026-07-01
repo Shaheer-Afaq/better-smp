@@ -10,6 +10,8 @@ public class ModSounds {
     }
 
     public static final SoundEvent DASH = registerSound("dash");
+    public static final SoundEvent KNIFEBACKSTAB = registerSound("knife-backstab");
+    public static final SoundEvent SCYTHHIT = registerSound("scyth-hit");
 
     private static SoundEvent registerSound(String id) {
         Identifier identifier = Identifier.fromNamespaceAndPath(BetterSMP.MOD_ID, id);

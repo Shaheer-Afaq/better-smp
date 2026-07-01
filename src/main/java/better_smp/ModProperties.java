@@ -1,12 +1,16 @@
 package better_smp;
 
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.component.AttackRange;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
+
+import java.awt.*;
 
 public class ModProperties {
 
@@ -18,6 +22,11 @@ public class ModProperties {
 
     public ModProperties durability(int durability) {
         properties.durability(durability);
+        return this;
+    }
+
+    public ModProperties name(String name, TextColor color) {
+        properties.component(DataComponents.CUSTOM_NAME, Component.literal(name).withColor(color));
         return this;
     }
 
@@ -40,7 +49,7 @@ public class ModProperties {
     public ModProperties range(float min, float max) {
         properties.component(
                 DataComponents.ATTACK_RANGE,
-                new AttackRange(min, max, min + 2, max + 2, 0, 1)
+                new AttackRange(min, max, min, max + 2, 0, 1)
         );
         return this;
     }
