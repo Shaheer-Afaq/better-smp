@@ -26,7 +26,7 @@ public class ModItems {
                 new ModProperties().weapon(4, 2).name("Reaper's Scyth", TextColor.LIGHT_PURPLE).range(0, 2f).build()
     );
     public static final Item BLOODLUSTKNIFE = register("bloodlustknife",
-            properties -> new BloodlustKnife(properties, 40, 100),
+            properties -> new BloodlustKnife(properties, 200, 100),
                 new ModProperties().weapon(4, 1.6f).name("Bloodlust Knife", TextColor.fromRgb(0xea3f4d)).build()
                         .component(DataComponents.SWING_ANIMATION, new SwingAnimation(SwingAnimationType.STAB, 10))
     );

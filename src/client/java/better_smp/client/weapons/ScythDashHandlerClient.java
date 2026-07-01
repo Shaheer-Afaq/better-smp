@@ -20,8 +20,8 @@ public class ScythDashHandlerClient {
             return;
         }
 
-        float progress = 1.0f - ((float) ticksRemaining / 9);
-        float multiplier = (float) Math.pow(1.0f - progress, 3);
+        float progress = (float) ticksRemaining / 10;
+        float multiplier = (float) Math.pow(progress, 3);
 
         player.setDeltaMovement(
             new Vec3(

@@ -6,6 +6,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -46,8 +47,8 @@ public abstract class CustomWeapon extends Item {
         if (owner instanceof Player player) {
             if (slot == EquipmentSlot.MAINHAND && level.getGameTime() % 2 == 0) {
 
-                int cooldownLeftPrimary = Math.round(getTicksLeft(stack, ModComponents.PRIMARY_NEXT_USABLE_TICK, level) / 20f);
-                int cooldownLeftSecondary = Math.round(getTicksLeft(stack, ModComponents.SECONDARY_NEXT_USABLE_TICK, level) / 20f);
+                int cooldownLeftPrimary = (int) Math.ceil(getTicksLeft(stack, ModComponents.PRIMARY_NEXT_USABLE_TICK, level) / 20f);
+                int cooldownLeftSecondary = (int) Math.ceil(getTicksLeft(stack, ModComponents.SECONDARY_NEXT_USABLE_TICK, level) / 20f);
                 MutableComponent message = cooldownLeftPrimary > 0 ? Component.literal( " " + cooldownLeftPrimary + "s left ").withColor(TextColor.RED):
                         Component.literal( " Ready ").withColor(TextColor.GREEN);
 
@@ -71,25 +72,17 @@ public abstract class CustomWeapon extends Item {
     public InteractionResult use(final Level level, final Player player, final InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         boolean isShift = player.isShiftKeyDown();
-
         var component = isShift ? ModComponents.SECONDARY_NEXT_USABLE_TICK : ModComponents.PRIMARY_NEXT_USABLE_TICK;
 
-        boolean isOnCooldown = getTicksLeft(stack, component, level) > 0;
+        if (getTicksLeft(stack, component, level) > 0) return InteractionResult.FAIL;
 
-        if (isOnCooldown){
-            return InteractionResult.PASS;
-        } else{
-            player.startUsingItem(hand);
-            if (level.isClientSide()) return InteractionResult.SUCCESS;
-        }
+        player.startUsingItem(hand);
+        if (level.isClientSide()) return InteractionResult.SUCCESS;
 
-        stack.set(component, level.getGameTime() + (isShift ? this.cooldownSecondary : this.cooldownPrimary));
-
-        if (isShift) onSecondaryUse(level, player, hand);
-        else onPrimaryUse(level, player, hand);
+        stack.set(component, level.getGameTime() + (isShift ? cooldownSecondary : cooldownPrimary));
+        if (isShift) onSecondaryUse(level, player, hand); else onPrimaryUse(level, player, hand);
 
         return InteractionResult.SUCCESS;
-
     }
 
     protected abstract void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, float strengthScale);
@@ -123,6 +116,10 @@ public abstract class CustomWeapon extends Item {
                 .orElse(null);
     }
 
+    protected boolean isBackstab(LivingEntity target, LivingEntity attacker) {
+        return target.getHeadLookAngle().dot(attacker.getHeadLookAngle()) > 0.4;
+    }
+
 //    protected boolean isHeadshot(LivingEntity target, LivingEntity attacker) {
 //        Vec3 eyePos = attacker.getEyePosition();
 //        Vec3 lookVec = attacker.getLookAngle();
@@ -139,10 +136,4 @@ public abstract class CustomWeapon extends Item {
 //
 //        return headBox.clip(eyePos, endPos).isPresent();
 //    }
-
-    protected boolean isBackstab(LivingEntity target, LivingEntity attacker) {
-        return target.getHeadLookAngle().dot(attacker.getHeadLookAngle()) > 0.4;
-    }
-
-
 }

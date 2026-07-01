@@ -28,7 +28,7 @@ public class ReapersScyth extends CustomWeapon {
         if (target.getHealth() < target.getMaxHealth() * 0.2){
             ServerLevel serverLevel = (ServerLevel) target.level();
             target.setHealth((float) (target.getHealth() - target.getMaxHealth() * 0.1));
-            serverLevel.playSound(null, target.getX(), target.getY(), target.getZ(), ModSounds.SCYTHHIT, SoundSource.PLAYERS);
+            serverLevel.playSound(null, target.getX(), target.getY(), target.getZ(), ModSounds.SCYTHHIT, SoundSource.PLAYERS, 0.3f, 1);
         }
     }
 
@@ -37,9 +37,9 @@ public class ReapersScyth extends CustomWeapon {
         if (player instanceof ServerPlayer serverPlayer) {
             Vec3 look = player.getLookAngle();
             Vec3 vel = player.getDeltaMovement();
-            float dashSpeed = 3f;
+            float dashSpeed = 4f;
             ServerPlayNetworking.send(serverPlayer, new DashPayload(
-                    look.x * dashSpeed, look.y * dashSpeed * 0.8, look.z * dashSpeed, vel.x, vel.y, vel.z, 9
+                    look.x * dashSpeed, look.y * dashSpeed * 0.8, look.z * dashSpeed, vel.x, vel.y, vel.z, 10
             ));
             ServerLevel serverLevel = (ServerLevel) player.level();
             serverLevel.playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.DASH, SoundSource.PLAYERS);

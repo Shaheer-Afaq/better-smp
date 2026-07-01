@@ -3,6 +3,7 @@ package com.better_smp.datagen;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.data.tags.DamageTypeTagsProvider;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -18,7 +19,7 @@ public class EnglishLangProvider extends FabricLanguageProvider {
         translationBuilder.add("item.better-smp.bloodlustknife", "Bloodlust Knife");
 
         translationBuilder.add("sound.better-smp.dash", "Scyth Dashes");
+        translationBuilder.add("sound.better-smp.scyth-hit", "Scyth Strikes");
         translationBuilder.add("sound.better-smp.knife-backstab", "Knife Backstabs");
-        translationBuilder.add("sound.better-smp.scyth-hit", "Scyth Hits");
     }
 }

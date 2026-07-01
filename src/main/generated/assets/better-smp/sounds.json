@@ -1,21 +1,21 @@
 {
   "dash": {
-    "subtitle": "sound.better-smp.dash",
     "sounds": [
       "better-smp:dash"
-    ]
+    ],
+    "subtitle": "sound.better-smp:dash"
   },
   "knife-backstab": {
-    "subtitle": "sound.better-smp.knife-backstab",
     "sounds": [
       "better-smp:knife-backstab"
-    ]
+    ],
+    "subtitle": "sound.better-smp:knife-backstab"
   },
   "scyth-hit": {
-    "subtitle": "sound.better-smp.scyth-hit",
     "sounds": [
       "better-smp:scyth-hit1",
       "better-smp:scyth-hit2"
-    ]
+    ],
+    "subtitle": "sound.better-smp:scyth-hit"
   }
 }

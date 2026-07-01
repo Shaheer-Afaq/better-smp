@@ -32,8 +32,6 @@ public class BloodlustKnife extends CustomWeapon{
         charge.put(UUID.randomUUID(), 0);
     }
 
-
-
     @Override
     protected void onHit(ItemStack stack, LivingEntity target, LivingEntity attacker, float strengthScale) {
 
@@ -43,24 +41,16 @@ public class BloodlustKnife extends CustomWeapon{
     protected void onPrimaryUse(Level level, Player player, InteractionHand hand) {
         LivingEntity target = getTargetInRange(player);
         if (target == null){
-            level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_ATTACK_WEAK, SoundSource.PLAYERS);
+            level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_ATTACK_NODAMAGE, SoundSource.PLAYERS);
+        }else if(isBackstab(target, player)){
+            target.hurtServer((ServerLevel) level, level.damageSources().playerAttack(player), 30);
+            level.playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.KNIFEBACKSTAB, SoundSource.PLAYERS, 0.4f, 1f);
         }else{
-            if(isBackstab(target, player)){
-//                if (isHeadshot(target, player)){
-//                    target.hurtServer((ServerLevel) level, level.damageSources().playerAttack(player), 20);
-//                    level.playSound(null, player.getX(), play
-//                }else{
-//                    target.hurtServer((ServerLevel) level, level.damageSources().playerAttack(player), 10);
-//                    level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDERMAN_DEATH, SoundSource.PLAYERS);
-//                }
-                    target.hurtServer((ServerLevel) level, level.damageSources().playerAttack(player), 20);
-                    level.playSound(null, player.getX(), player.getY(), player.getZ(), ModSounds.KNIFEBACKSTAB, SoundSource.PLAYERS, 0.4f, 1f);
-            }
-            else{
-                level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_ATTACK_STRONG, SoundSource.PLAYERS);
-                target.hurtServer((ServerLevel) level, level.damageSources().playerAttack(player), 4);
-            }
+            target.hurtServer((ServerLevel) level, level.damageSources().playerAttack(player), 4);
+            level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_ATTACK_STRONG, SoundSource.PLAYERS);
         }
+        player.stopUsingItem();
+
     }
     @Override
     protected void onSecondaryUse(Level level, Player player, InteractionHand hand) {
@@ -74,7 +64,7 @@ public class BloodlustKnife extends CustomWeapon{
 
     @Override
     public int getUseDuration(final ItemStack itemStack, final LivingEntity user) {
-        return 20;
+        return 15;
     }
 
 
